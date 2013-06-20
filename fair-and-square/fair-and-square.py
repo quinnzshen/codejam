@@ -8,7 +8,7 @@ memo_ana = dict()
 
 def isFairAndSquare(num):
     square = math.sqrt(num)
-    if square == int(square) and isFair(num):
+    if square == int(square) and isFair(num) and isFair(int(square)):
         return 1
     return 0
 
@@ -16,21 +16,24 @@ def isFair(num):
     if num in memo_ana:
         return memo_ana[num]
     else:
-        i = int(math.ceil(num/2))
-        if str(num)[i:] == str(num)[:-i]:
+        i = int(math.ceil(float(len(str(num)))/2))
+        if str(num)[i:] == str(num)[:-i][::-1]:
             memo_ana[num] = True
         else:
             memo_ana[num] = False
+        # print "ana: " + str(num) + " ana " + str(memo_ana[num]) + " num " + str(num) + " equals " + str(num)[i:] + " . " + str(num)[:-i][::-1]
         return memo_ana[num]
 
 def solve(lower_limit, upper_limit):
     num = lower_limit
     count = 0
-    while num < upper_limit:
+    while num <= upper_limit:
         if num in memo:
             count += memo[num]
         else:
             memo[num] = isFairAndSquare(num)
+            count += memo[num]
+            # print "num: " + str(num) + " FaS " + str(isFairAndSquare(num))
         num += 1 
     return count
 
@@ -47,6 +50,7 @@ def main():
         total_cases = int(input.readline())
 
         for case in range(1, total_cases + 1):
+            print "working on case#:" + str(case)
             line = (input.readline()).split()
             a, b = int(line[0]), int(line[1])
 
