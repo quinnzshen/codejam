@@ -25,16 +25,17 @@ def isFair(num):
         return memo_ana[num]
 
 def solve(lower_limit, upper_limit):
-    num = lower_limit
+    num_root = int(math.ceil(math.sqrt(lower_limit)))
     count = 0
-    while num <= upper_limit:
+    while num_root <= int(math.sqrt(upper_limit)):
+        num = num_root ** 2
         if num in memo:
             count += memo[num]
         else:
             memo[num] = isFairAndSquare(num)
             count += memo[num]
             # print "num: " + str(num) + " FaS " + str(isFairAndSquare(num))
-        num += 1 
+        num_root += 1 
     return count
 
 def main():
